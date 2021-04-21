@@ -1,10 +1,11 @@
 import Vue from 'vue';
 
+import http   from './config/http';
 import router from './config/router'
 import config from './config/vueAuthConfig';
-import http   from './config/http';
 import vuetify from "./config/vuetify";
 import './config/bootstrap';
+import './config/fontAwesome';
 
 // window.Vue = require('vue').default;
 
@@ -14,6 +15,7 @@ import './config/bootstrap';
 //Vue.component('App', require('./components/App.vue').default);
 
 import App from './components/App';
+import {routes} from "./config/router/routes";
 
 Vue.config.productionTip = false;
 

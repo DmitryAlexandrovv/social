@@ -1,0 +1,2 @@
+require('./fontAwesome');
+export default {};

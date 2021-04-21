@@ -1,8 +1,6 @@
 <template>
     <div class="container">
-        <div class="header">
-            header
-        </div>
+        <Header/>
         <div class="chats-container">
             chats-container
         </div>
@@ -13,7 +11,12 @@
 </template>
 
 <script>
+    import Header from "./Header/Header";
+
     export default {
-        name: "Profile"
+        name: "Profile",
+        components: {
+            Header
+        }
     }
 </script>
