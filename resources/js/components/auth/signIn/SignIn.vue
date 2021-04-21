@@ -3,14 +3,27 @@
         <template v-slot:content>
             <h3 class="text-center mb-0">Welcome</h3>
             <p class="text-center">Sign in by entering the information below</p>
-            <v-card action="#" class="login-form">
+            <v-card
+                class="login-form"
+                color="transparent">
+                <div v-if="unauthorized"
+                     class="user-is-not-exists error--text m-auto">
+                    User is not exists
+                </div>
                 <div class="form-group">
                     <div class="icon d-flex align-items-center justify-content-center">
                         <span class="fa fa-user">
                             <font-awesome-icon icon="user"/>
                         </span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Username" required="">
+                    <v-text-field
+                        v-model="form.name"
+                        :error-messages="checkError('name')"
+                        placeholder="Name"
+                        type="name"
+                        :single-line="true"
+                    >
+                    </v-text-field>
                 </div>
                 <div class="form-group">
                     <div class="icon d-flex align-items-center justify-content-center">
@@ -18,7 +31,13 @@
                             <font-awesome-icon icon="lock"/>
                         </span>
                     </div>
-                    <input type="password" class="form-control" placeholder="Password" required="">
+                    <v-text-field
+                        v-model="form.password"
+                        :error-messages="checkError('password')"
+                        placeholder="Password"
+                        type="password"
+                        :single-line="true"
+                    />
                 </div>
                 <div class="form-group d-md-flex">
                     <div class="w-100 text-md-right">
@@ -26,7 +45,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn form-control btn-primary rounded submit px-3">Get Started</button>
+                    <button @click.prevent="onLogin"
+                            type="submit"
+                            class="btn form-control btn-primary rounded submit px-3">
+                        Get Started
+                    </button>
                 </div>
             </v-card>
             <div class="w-100 text-center mt-4 text">
@@ -35,6 +58,7 @@
                     <a href="#">Sign Up</a>
                 </router-link>
             </div>
+            <p style="color: red;" v-if="$auth.check()">авторизован</p>
         </template>
     </AuthTemplate>
 </template>
@@ -42,18 +66,50 @@
 <script>
     import Vue from 'vue';
     import {library} from '@fortawesome/fontawesome-svg-core';
-    import {faUser, faLock} from '@fortawesome/free-solid-svg-icons';
+    import {faUser, faLock, faTimes} from '@fortawesome/free-solid-svg-icons';
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
     import AuthTemplate from "../../abstract/auth/AuthTemplate";
+    import axios from "axios";
+    import VueAxios from "vue-axios";
 
-    library.add(faUser, faLock);
+    library.add(faUser, faLock, faTimes);
     Vue.component('font-awesome-icon', FontAwesomeIcon);
     Vue.config.productionTip = false;
+    Vue.use(VueAxios, axios);
 
     export default {
         name: "SignIn",
         components: {
             AuthTemplate
+        },
+        data() {
+            return {
+                form: {
+                    name: null,
+                    password: null
+                },
+                errors: {},
+                unauthorized: false
+            }
+        },
+        methods: {
+            onLogin() {
+                this.$auth.login({
+                    data: {
+                        ...this.form
+                    },
+                    redirect: null
+                }).catch(error => {
+                    if (error.response.status === 401) {
+                        this.unauthorized = true;
+                    } else {
+                        this.errors = error.response.data.errors;
+                    }
+                });
+            },
+            checkError(field) {
+                return this.errors.hasOwnProperty(field) ? this.errors[field] : [];
+            }
         }
     }
 </script>
@@ -130,7 +186,7 @@
         border-color: #b689b0;
     }
 
-    .form-group .error--text {
+    .error--text {
         color: rgb(227, 38, 54);
     }
 

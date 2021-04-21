@@ -2,31 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Validator;
+
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')
-            ->only('logout');
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('cors');
+    }
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'password' => 'required|string|min:3',
+        ]);
+
+        try {
+            $this->validate($request, [
+                'name' => 'required|string|between:2,60',
+                'password' => 'min:6'
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'Validation error',
+                'errors' => $e->errors()
+            ], 422);
+        }
+
+        if (!$token = auth()->attempt($validator->validated())) {
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'User is not exists'
+            ], 401);
+        }
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            //'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ])->header('Authorization', 'Bearer '.$token);
     }
 
     public function register(Request $request)
     {
         try {
             $this->validate($request, [
-                'name' => 'required|max:60',
-                'email' => 'required|email|unique:users',
-                'phone' => 'required|max:16|unique:users',
-                'password' => 'required|between:6,40',
-                'repeatPassword' => 'required|between:6,40'
+                'name' => 'required|string|between:2,60|unique:users',
+                'email' => 'required|string|email|max:225|unique:users',
+                'phone' => 'required|phone:RU|unique:users',
+                'password' => 'min:6|required_with:passwordConfirmation|same:passwordConfirmation',
+                'passwordConfirmation' => 'min:6'
             ]);
         } catch (ValidationException $e) {
-            Log::debug($e);
             return response()->json([
                 'status' => 'error',
                 'msg' => 'error',
@@ -34,48 +71,43 @@ class AuthController extends Controller
             ], 422);
         }
 
-        $user = new User($request->all());
-        $user->save();
+        $user = User::create(array_merge(
+            $request->all(),
+            ['password' => bcrypt($request->password)]
+        ));
 
         return response()->json([
-            'success' => true
-        ]);
+            'message' => 'User successfully registered',
+            'user' => $user
+        ], 201);
     }
 
-    public function login(Request $request)
+
+    public function logout()
     {
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required|between:6,40'
-        ]);
+        auth()->logout();
 
-        $user = User::whereEmail($request->email)->first();
-
-        if ($user && Hash::check($request->password, $user->password)) {
-            $user->api_token = str_random(60);
-            $user->save();
-
-            return response()->json([
-                'success' => true,
-                'user' => $user->info()
-            ]);
-        }
-
-        return response()->json([
-            'errors' => [
-                'email' => 'These credentials do not match our records.'
-            ]
-        ], 422);
+        return response()->json(['message' => 'User successfully signed out']);
     }
 
-    public function logout(Request $request)
+    public function refresh()
     {
-        $user = $request->user();
-        $user->api_token = null;
-        $user->save();
+        return $this->createNewToken(auth()->refresh());
+    }
 
+    public function userProfile()
+    {
+        return response()->json(auth()->user());
+    }
+
+    protected function createNewToken($token)
+    {
         return response()->json([
-            'success' => true
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user()
         ]);
     }
+
 }

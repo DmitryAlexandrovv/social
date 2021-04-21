@@ -1,0 +1,2 @@
+require('./bootstrap');
+export default {};

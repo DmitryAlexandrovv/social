@@ -1,8 +1,15 @@
 <?php
 
-    use Illuminate\Http\Request;
     use App\Http\Controllers\AuthController;
+    use Illuminate\Support\Facades\Route;
 
-    Route::post('/signUp', [AuthController::class, 'register']);
-    Route::post('/login', 'AuthController@login');
-    Route::post('/logout', 'AuthController@logout');
+    Route::group([
+        'middleware' => ['api'. 'cors'],
+        'prefix' => 'auth'
+    ], function ($router) {
+        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('/refresh', [AuthController::class, 'refresh']);
+        Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    });
