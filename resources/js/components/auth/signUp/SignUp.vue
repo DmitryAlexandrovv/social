@@ -130,13 +130,15 @@
         },
         methods: {
             onRegister() {
-                axios
-                    .post("/api/auth/register", this.form)
-                    .then(response => {
-                        //Можно сразу авторизовать
-                        this.$router.push("/");
-                    })
-                    .catch(error => {
+                this.$auth
+                    .register({
+                        data: {
+                            ...this.form
+                        },
+                        redirect: '/profile',
+                        staySignedIn: true,
+                        autoLogin: true,
+                    }).catch(error => {
                         this.errors = error.response.data.errors;
                     });
             },

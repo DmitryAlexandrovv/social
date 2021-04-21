@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Validator;
 
@@ -78,7 +77,8 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'User successfully registered',
-            'user' => $user
+            'user' => $user,
+            'success' => true,
         ], 201);
     }
 
