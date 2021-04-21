@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('phone', 16);
             $table->string('email', 255);
-            $table->string('password', 40);
+            $table->string('password', 255);
             $table->string('name', 60);
             $table->boolean('is_active')->nullable();
             $table->boolean('is_reported')->nullable();

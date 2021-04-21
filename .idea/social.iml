@@ -116,6 +116,13 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/league/commonmark" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fideloper/proxy" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fruitcake/laravel-cors" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/namshi/jose" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/lcobucci/jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tymon/jwt-auth" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/giggsey/locale" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/league/iso3166" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/propaganistas/laravel-phone" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/giggsey/libphonenumber-for-php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
