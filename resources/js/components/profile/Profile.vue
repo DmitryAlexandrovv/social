@@ -1,17 +1,16 @@
 <template>
-    <div class="container">
+    <fragment>
         <Header/>
-        <div class="chats-container">
-            chats-container
-        </div>
-        <div class="selected-chat">
-            selected-chat
-        </div>
-    </div>
+    </fragment>
 </template>
 
 <script>
+    import Vue from 'vue';
+    import { Plugin } from 'vue-fragment';
+
     import Header from "./Header/Header";
+
+    Vue.use(Plugin);
 
     export default {
         name: "Profile",

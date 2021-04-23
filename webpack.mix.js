@@ -8,6 +8,7 @@ mix.js('resources/js/app.js', 'public/js')
     .webpackConfig(webpack => {
         return {
             plugins: [
+                new VuetifyLoaderPlugin()
             ]
         };
     });

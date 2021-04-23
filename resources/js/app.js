@@ -15,9 +15,17 @@ import './config/fontAwesome';
 //Vue.component('App', require('./components/App.vue').default);
 
 import App from './components/App';
-import {routes} from "./config/router/routes";
 
 Vue.config.productionTip = false;
+
+import vuex from 'vuex';
+Vue.use(vuex);
+import Dropdown from '../js/components/profile/Header/dropdown/store/dropdown';
+const store = new vuex.Store({
+    modules: {
+        Dropdown
+    }
+});
 
 new Vue({
     el: '#app',
@@ -25,6 +33,7 @@ new Vue({
     router: router,
     http: http,
     config: config,
+    store: store,
     components: {
         App
     }
