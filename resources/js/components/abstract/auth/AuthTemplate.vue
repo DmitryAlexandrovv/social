@@ -18,7 +18,7 @@
 <style scoped>
     .login-wrap {
         position: relative;
-        background: #000232;
+        background: #fff;
         border-radius: 5px;
         padding-left: 30px;
         padding-right: 30px;

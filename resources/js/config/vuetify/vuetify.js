@@ -9,6 +9,11 @@ export default new Vuetify({
         iconfont: "md" // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
     },
     theme: {
-        disable: true
+        light: {
+            primary: '#b689b0',
+            secondary: '#b0bec5',
+            accent: '#8c9eff',
+            error: 'rgb(227, 38, 54)',
+        },
     }
 });

@@ -59,10 +59,8 @@
                 this.$auth.logout({
                         makeRequest: true,
                         redirect: '/'
-                    }).then((res) => {
-                        console.log(res);
                     }).catch(error => {
-                        console.error('something goes wrong');
+                        console.error(error);
                 });
             }
         }
@@ -77,7 +75,6 @@
     .header {
         background: #000232;
         color: #fff;
-        parring: 10px 20px;
     }
 
     .social-dropdown--list {

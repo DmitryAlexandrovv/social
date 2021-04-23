@@ -4,7 +4,7 @@ import http   from './config/http';
 import router from './config/router'
 import config from './config/vueAuthConfig';
 import vuetify from "./config/vuetify";
-import './config/bootstrap';
+import store from './config/store';
 import './config/fontAwesome';
 
 // window.Vue = require('vue').default;
@@ -18,22 +18,13 @@ import App from './components/App';
 
 Vue.config.productionTip = false;
 
-import vuex from 'vuex';
-Vue.use(vuex);
-import Dropdown from '../js/components/profile/Header/dropdown/store/dropdown';
-const store = new vuex.Store({
-    modules: {
-        Dropdown
-    }
-});
-
 new Vue({
     el: '#app',
     vuetify,
-    router: router,
-    http: http,
-    config: config,
-    store: store,
+    router,
+    http,
+    config,
+    store,
     components: {
         App
     }
