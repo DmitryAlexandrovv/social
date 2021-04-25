@@ -13,7 +13,6 @@
             </router-link>
             <router-link to="/signUp">
                 <v-btn
-                <v-btn
                     width="150px"
                     depressed
                     color="primary"

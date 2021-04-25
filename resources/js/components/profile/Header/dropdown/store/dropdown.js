@@ -12,6 +12,7 @@ export default {
             },
             {
                 title: 'Settings',
+                component: 'Settings',
                 id: 2
             },
         ],

@@ -25,21 +25,28 @@
                     :key="item.id"
                     link
                 >
-                    <v-list-item-title v-text="item.title"></v-list-item-title>
+                    <v-list-item-title
+                        @click="showModal(item.component, {
+                            title: item.title
+                        })"
+                       v-text="item.title">
+
+                    </v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
-        <span class="fa fa-times" @click="onLogout">
-            Logout
-<!--            <font-awesome-icon icon="times"/>-->
-        </span>
     </div>
 </template>
 
 <script>
+    import Vue from 'vue';
+    import VModal from 'vue-js-modal'
     import { createNamespacedHelpers } from 'vuex';
+    import Settings from "./settings/Settings";
 
     const { mapGetters } = createNamespacedHelpers('Dropdown');
+
+    Vue.use(VModal);
 
     export default {
         name: "Header",
@@ -48,6 +55,9 @@
                 items: {}
             }
         },
+        components: {
+            Settings
+        },
         mounted() {
             this.items = {...this.socialQuickLinks};
         },
@@ -55,13 +65,14 @@
             ...mapGetters(['socialQuickLinks'])
         },
         methods: {
-            onLogout() {
-                this.$auth.logout({
-                        makeRequest: true,
-                        redirect: '/'
-                    }).catch(error => {
-                        console.error(error);
-                });
+            showModal(component, props) {
+                switch (component) {
+                    case 'Settings':
+                        this.$modal.show(
+                            Settings,
+                            props
+                        );
+                }
             }
         }
     }
