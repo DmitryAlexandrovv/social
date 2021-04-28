@@ -55,7 +55,10 @@
 </template>
 
 <script>
+    import { createNamespacedHelpers } from 'vuex';
     import AuthTemplate from "../../abstract/auth/AuthTemplate";
+
+    const { mapActions } = createNamespacedHelpers('User');
 
     export default {
         name: "SignIn",
@@ -73,12 +76,16 @@
             }
         },
         methods: {
+            ...mapActions(['setUser']),
             onLogin() {
                 this.$auth.login({
                     data: {
                         ...this.form
                     },
-                    redirect: '/profile'
+                    redirect: '/profile',
+                    fetchUser: true
+                }).then(res => {
+                    localStorage.setItem('user', JSON.stringify(res.data));
                 }).catch(error => {
                     if (error.response.status === 401) {
                         this.unauthorized = true;

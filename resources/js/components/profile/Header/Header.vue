@@ -28,6 +28,9 @@
                     <v-list-item-title
                         @click="showModal(item.component, {
                             title: item.title
+                        },
+                        {
+                            height: 'auto'
                         })"
                        v-text="item.title">
 
@@ -65,12 +68,13 @@
             ...mapGetters(['socialQuickLinks'])
         },
         methods: {
-            showModal(component, props) {
+            showModal(component, componentProps, modalProps) {
                 switch (component) {
                     case 'Settings':
                         this.$modal.show(
                             Settings,
-                            props
+                            componentProps,
+                            modalProps
                         );
                 }
             }

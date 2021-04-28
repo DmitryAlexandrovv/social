@@ -1,8 +1,8 @@
 <template>
-    <div class="social-modal">
-        <div class="social-modal__header">
-            <p class="social-modal__title">{{title}}</p>
-            <p class="social-modal__close" @click.prevent="close">Close</p>
+    <div class="social-modal pb-4">
+        <div class="social-modal__header px-4">
+            <p class="social-modal__title py-2">{{title}}</p>
+            <p class="social-modal__close py-2" @click.prevent="close">Close</p>
         </div>
         <slot name="content"></slot>
     </div>
@@ -34,11 +34,12 @@
         justify-content: space-between;
     }
 
-    .social-modal__header p {
-        margin: 10px 20px 10px 20px;
-    }
-
     .social-modal__close {
         cursor: pointer;
+        color: #dde8f1;
+    }
+
+    .social-modal__close:hover {
+        color: #fff;
     }
 </style>
