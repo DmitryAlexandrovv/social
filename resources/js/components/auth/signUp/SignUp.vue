@@ -77,7 +77,10 @@
 </template>
 
 <script>
+    import { createNamespacedHelpers } from 'vuex';
     import AuthTemplate from "../../abstract/auth/AuthTemplate";
+
+    const { mapActions } = createNamespacedHelpers('User');
 
     export default {
         name: "SignUp",
@@ -97,6 +100,7 @@
             }
         },
         methods: {
+            ...mapActions(['setUser']),
             onRegister() {
                 this.$auth
                     .register({
@@ -106,7 +110,10 @@
                         redirect: '/profile',
                         staySignedIn: true,
                         autoLogin: true,
-                    }).catch(error => {
+                    }).then(res => {
+                        this.setUser(res.data);
+                    })
+                    .catch(error => {
                         this.errors = error.response.data.errors;
                     });
             },

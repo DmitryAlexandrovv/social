@@ -1,8 +1,8 @@
 <template>
     <div class="social-modal pb-4">
         <div class="social-modal__header px-4">
-            <p class="social-modal__title py-2">{{title}}</p>
-            <p class="social-modal__close py-2" @click.prevent="close">Close</p>
+            <p class="social-modal__link social-modal__title py-2">{{title}}</p>
+            <p class="social-modal__link social-modal__close py-2" @click.prevent="close">Close</p>
         </div>
         <slot name="content"></slot>
     </div>
@@ -25,7 +25,7 @@
     }
 </script>
 
-<style scoped>
+<style>
     .social-modal__header {
         background: #000232;
         color: #fff;
@@ -34,12 +34,12 @@
         justify-content: space-between;
     }
 
-    .social-modal__close {
+    .social-modal .social-modal__link {
         cursor: pointer;
         color: #dde8f1;
     }
 
-    .social-modal__close:hover {
+    .social-modal .social-modal__link:hover {
         color: #fff;
     }
 </style>

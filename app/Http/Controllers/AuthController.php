@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Validator;
 
@@ -70,7 +71,10 @@ class AuthController extends Controller
 
         $user = User::create(array_merge(
             $request->all(),
-            ['password' => bcrypt($request->password)]
+            [
+                'password' => bcrypt($request->password),
+                'path_to_image' => Storage::url('defaults/avatar/avatar.png')
+            ]
         ));
 
         return response()->json([

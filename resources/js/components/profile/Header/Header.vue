@@ -46,6 +46,7 @@
     import VModal from 'vue-js-modal'
     import { createNamespacedHelpers } from 'vuex';
     import Settings from "./settings/Settings";
+    import axios from "axios";
 
     const { mapGetters } = createNamespacedHelpers('Dropdown');
 

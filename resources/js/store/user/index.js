@@ -14,7 +14,7 @@ export default {
         }
     },
     getters: {
-        user: state => state
+        user: state => state.user
     },
     mutations: {
         setUser(state, user) {

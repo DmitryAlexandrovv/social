@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import vuex from 'vuex';
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(vuex);
 import Dropdown from '../../store/dropdown';
@@ -9,5 +10,6 @@ export default new vuex.Store({
     modules: {
         Dropdown,
         User
-    }
+    },
+    plugins: [createPersistedState()],
 });
