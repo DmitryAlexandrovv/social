@@ -35,6 +35,7 @@
                 </div>
                 <div class="form-group">
                     <v-text-field
+                        type="password"
                         v-model="form.password"
                         :error-messages="checkError('password')"
                         color="purple darken-2"

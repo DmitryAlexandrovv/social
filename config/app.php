@@ -171,12 +171,17 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
+        Propaganistas\LaravelPhone\PhoneServiceProvider::class,
+
+        /*
+         * Application Repositories Providers...
+         */
+        App\Providers\RepositoryServiceProvider::class,
     ],
 
     /*

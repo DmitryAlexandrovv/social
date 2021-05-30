@@ -6,6 +6,14 @@ import config from './config/vueAuthConfig';
 import vuetify from "./config/vuetify";
 import store from './config/store';
 import './config/fontAwesome';
+import './config/pusher';
+
+//TODO вынести в отдельный конфиг
+
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
+
+Vue.use(PerfectScrollbar)
 
 // window.Vue = require('vue').default;
 

@@ -1,5 +1,5 @@
 <template>
-    <div :class="chatItemClass">
+    <div :class="chatItemClass" @click="selectRecipient">
         <div class="interlocutor-avatar">
             <img :src="pathToImage">
         </div>
@@ -22,6 +22,10 @@
             selected: {
                 type: Boolean,
                 default: false
+            },
+            userId: {
+                type: Number,
+                requireed: true
             }
         },
         computed: {
@@ -30,6 +34,11 @@
                     'chat-item d-flex': true,
                     'selected': this.selected
                 }
+            }
+        },
+        methods: {
+            selectRecipient() {
+                this.$emit('selectRecipient', this.userId);
             }
         }
     }

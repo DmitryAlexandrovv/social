@@ -21,6 +21,7 @@
                 </div>
                 <div class="form-group">
                     <v-text-field
+                        type="password"
                         v-model="form.password"
                         :error-messages="checkError('password')"
                         color="purple darken-2"
@@ -78,14 +79,17 @@
         methods: {
             ...mapActions(['setUser']),
             onLogin() {
+                //TODO мб что-то поломалось, тк убрал redirect из options
                 this.$auth.login({
                     data: {
                         ...this.form
                     },
-                    redirect: '/profile',
+                    // redirect: '/profile',
                     fetchUser: true
-                }).then(res => {
+                })
+                .then(res => {
                     this.setUser(res.data);
+                    this.$router.push('/profile');
                 }).catch(error => {
                     if (error.response.status === 401) {
                         this.unauthorized = true;

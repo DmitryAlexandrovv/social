@@ -120,6 +120,9 @@
                 this.$auth.logout({
                     makeRequest: true,
                     redirect: '/signIn'
+                }).finally(res => {
+                    //TODO, данные о юзере будем сохранять в куки
+                    window.localStorage.clear();
                 });
             },
             close() {
